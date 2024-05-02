@@ -1,20 +1,28 @@
-import React, { useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { navigate } from "wouter/use-hash-location";
+import Home from "./Home";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [login, setLogin] = useState(false);
-
+  const token = localStorage.getItem("clonstagram-token")
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
+
+  useEffect (() => {
+    if(token) {
+      navigate("/home")
+    }
+  },[token])
 
   const submit = (data) => {
     if (login === false) {
       axios
         .post("https://socialmedia-production-6fef.up.railway.app/api/v1/users", data)
         .then((res) => navigate("/"))
-        .cath(console.log(error));
+        .catch(error => console.log(error));
     } else {
         axios.post("https://socialmedia-production-6fef.up.railway.app/api/v1/users/login", data)
         .then(res => {
@@ -35,46 +43,30 @@ const Login = () => {
     setLogin(!login);
   };
 
-  if (login === true) {
-    return (
-      <>
-        <div className="home">
-          <header className="header">
-            <img src={logo} alt="logo" className="logo" />
-            <h2 style={{marginTop: "2rem"}}>Regístrate para ver fotos y videos de tus amigos</h2>
-          </header>
-          <main>
-            <form className="form login" onSubmit={handleSubmit(submit)}>
-              <input
-                className="field"
-                type="text"
-                {...register("userInfo", { required: true })}
-                placeholder="Username or email"
-              />
-              <input
-                className="field"
-                type="password"
-                {...register("password", { required: true })}
-                placeholder="Password"
-              />
-              <input className="btn-send" type="submit" value="Inicia sesión" />
-            </form>
-            <p className="text-login">
-              ¿No tienes una cuenta?{" "}
-              <span className="link" onClick={() => changeView()}>Registrate</span>
-            </p>
-          </main>
-        </div>
-      </>
-    );
-  } else {
-    return (
-      <div className="home">
-        <header className="header">
-          <img src={logo} alt="logo" className="logo" />
-          <h2 style={{marginTop: "2rem"}}>Regístrate para ver fotos y videos de tus amigos</h2>
-        </header>
-        <main>
+  return (
+    <div className="home">
+      <header className="header">
+        <img src={logo} alt="logo" className="logo" />
+        <h2 style={{marginTop: "2rem"}}>Regístrate para ver fotos y videos de tus amigos</h2>
+      </header>
+      <main>
+        {login === true ? (
+          <form className="form login" onSubmit={handleSubmit(submit)}>
+            <input
+              className="field"
+              type="text"
+              {...register("userInfo", { required: true })}
+              placeholder="Username or email"
+            />
+            <input
+              className="field"
+              type="password"
+              {...register("password", { required: true })}
+              placeholder="Password"
+            />
+            <input className="btn-send" type="submit" value="Inicia sesión" />
+          </form>
+        ) : (
           <form className="form" onSubmit={handleSubmit(submit)}>
             <input
               className="field"
@@ -119,14 +111,14 @@ const Login = () => {
             </p>
             <input className="btn-send" type="submit" value="Registrarte" />
           </form>
-          <p className="text-login">
-            ¿Tienes una cuenta?{" "}
-            <span className="link" onClick={() => changeView()}>Inicia Sesión</span>
-          </p>
-        </main>
-      </div>
-    );
-  }
+        )}
+        <p className="text-login">
+          {login ? "¿No tienes una cuenta? " : "¿Tienes una cuenta? "}{" "}
+          <span className="link" onClick={() => changeView()}>{login ? "Regístrate" : "Inicia Sesión"}</span>
+        </p>
+      </main>
+    </div>
+  );
 };
 
 export default Login;
