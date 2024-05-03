@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <HashRouter>
-        <AppNavBar />
+      <AppNavBar/>
         <Routes>
           <Route path="/" element={<Login />}></Route>
           <Route path="/home" element={<Home />}></Route>
