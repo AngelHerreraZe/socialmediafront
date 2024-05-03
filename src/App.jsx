@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import AppNavBar from "./components/AppNavBar";
+import Post from "./components/Post";
 
 function App() {
   return (

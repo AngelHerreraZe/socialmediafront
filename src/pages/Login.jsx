@@ -47,7 +47,7 @@ const Login = () => {
   };
 
   return (
-    <div className="home">
+    <div className="login">
       <header className="header">
         <img src={logo} alt="logo" className="logo" />
         <h2 style={{marginTop: "2rem"}}>Regístrate para ver fotos y videos de tus amigos</h2>
