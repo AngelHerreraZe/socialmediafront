@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./../../public/favicon.jpeg";
 import Carrousel from "./Carrousel";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import getConfig from "../utils/getConfig";
 
 const Post = ({ post }) => {
+  const token = jwtDecode(localStorage.getItem("clonstagram-token"));
+  const loggedUserId = token.id;
+  console.log(post.id);
+  const [alreadyLiked, setAlreadyLiked] = useState(false);
+  useEffect(() => {
+    for (let i = 0; i < post.Likes.length; i++) {
+      if (Number(post.Likes[i].user_id) === Number(loggedUserId)) {
+        setAlreadyLiked(true);
+      }
+    }
+  }, [alreadyLiked]);
+  const likePost = () => {
+    axios
+      .post(
+        `https://socialmedia-production-6fef.up.railway.app/api/v1/post/${post.id}/like`,
+        {},
+        getConfig()
+      )
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error.data));
+  };
   return (
     <div className="post">
       <div className="header flex">
@@ -32,7 +56,11 @@ const Post = ({ post }) => {
       </div>
       <div className="post-footer">
         <div className="post-footer-left flex">
-          <i className="bx bx-heart"></i>
+          {alreadyLiked === true ? (
+            <i onClick={() => likePost()} className="bx bxs-heart liked"></i>
+          ) : (
+            <i onClick={() => likePost()} className="bx bx-heart"></i>
+          )}
           <i className="bx bx-message-rounded"></i>
           <i className="bx bx-paper-plane"></i>
         </div>
