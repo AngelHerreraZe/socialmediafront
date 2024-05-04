@@ -8,10 +8,10 @@ if (token) {
     status = false
 }
 
-const useStore = create((set) => ({
+const useNavBarStore = create((set) => ({
     showNavBar: status,
     changeNavBarStatus: () => set((state) => ({ showNavBar: !state.showNavBar})),
     updateNavBarStatus: (newStatus) => set({showNavBar: newStatus})
 }))
 
-export default useStore;
+export default useNavBarStore;

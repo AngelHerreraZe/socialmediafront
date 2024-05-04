@@ -1,7 +1,9 @@
 import React from "react";
 import logo from "./../../public/favicon.jpeg";
+import Carrousel from "./Carrousel";
 
 const Post = ({ post }) => {
+  const postLength = post.Media_posts.length;
   return (
     <div className="post">
       <div className="header flex">
@@ -15,19 +17,25 @@ const Post = ({ post }) => {
             {post.User.name} {post.User.lastname}
           </p>
         </div>
-        <div className="flex" style={{flexDirection: "column", alignItems: "center", textAlign: "center"}}>
+        <div
+          className="flex"
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
           <p style={{ fontSize: "1.3rem" }}>...</p>
         </div>
       </div>
       <div className="post-content flex">
-        {post.Media_posts.map((media) => (
-          <img
-            className="post-img"
-            src={post.Media_posts[0].media_url}
-            alt=""
-            key={media.id}
-          />
-        ))}
+        {postLength > 1 ? (
+          post.Media_posts.map(media => (
+            <Carrousel key={media.media_url} media={media} />
+          ))
+        ) : (
+          <img className={post.media_url} src="media.media_url"></img>
+        )}
       </div>
       <div className="post-footer">
         <div className="post-footer-left flex">

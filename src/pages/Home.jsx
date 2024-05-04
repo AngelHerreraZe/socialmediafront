@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import useStore from "../store/navBarState";
+import useNavBarStore from "../store/navBarState";
 import logo from "./../assets/logo.png";
 import axios from "axios";
 import getConfig from "../utils/getConfig";
 import Post from "../components/Post";
 
 const Home = () => {
-  const { changeNavBarStatus } = useStore();
+  const { changeNavBarStatus } = useNavBarStore();
   const [homePosts, setHomePosts] = useState([]);
   const navigate = useNavigate();
   const logOut = () => {

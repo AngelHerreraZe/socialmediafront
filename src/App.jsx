@@ -4,12 +4,13 @@ import Home from "./pages/Home";
 import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import AppNavBar from "./components/AppNavBar";
 import Post from "./components/Post";
+import Carrousel from "./components/Carrousel";
 
 function App() {
   return (
     <>
       <HashRouter>
-      <AppNavBar/>
+        <AppNavBar />
         <Routes>
           <Route path="/" element={<Login />}></Route>
           <Route path="/home" element={<Home />}></Route>

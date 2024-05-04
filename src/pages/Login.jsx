@@ -4,14 +4,14 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Home from "./Home";
 import { useNavigate } from "react-router-dom";
-import useStore from "../store/navBarState";
+import useNavBarStore from "../store/navBarState";
 
 const Login = () => {
   const [login, setLogin] = useState(false);
   const token = localStorage.getItem("clonstagram-token")
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-  const {changeNavBarStatus} = useStore();
+  const {changeNavBarStatus} = useNavBarStore();
 
   useEffect (() => {
     if(token) {

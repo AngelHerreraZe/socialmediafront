@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Home from '../pages/Home';
-import useStore from '../store/navBarState';
+import useNavBarStore from '../store/navBarState';
 
 const AppNavBar = () => {
-    const {showNavBar} = useStore();
+    const {showNavBar} = useNavBarStore();
 
     useEffect(() => {
     }, [showNavBar]);
