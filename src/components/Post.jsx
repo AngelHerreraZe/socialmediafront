@@ -3,7 +3,6 @@ import logo from "./../../public/favicon.jpeg";
 import Carrousel from "./Carrousel";
 
 const Post = ({ post }) => {
-  const postLength = post.Media_posts.length;
   return (
     <div className="post">
       <div className="header flex">
@@ -29,13 +28,7 @@ const Post = ({ post }) => {
         </div>
       </div>
       <div className="post-content flex">
-        {postLength > 1 ? (
-          post.Media_posts.map(media => (
-            <Carrousel key={media.media_url} media={media} />
-          ))
-        ) : (
-          <img className={post.media_url} src="media.media_url"></img>
-        )}
+        <Carrousel media={post.Media_posts} />
       </div>
       <div className="post-footer">
         <div className="post-footer-left flex">

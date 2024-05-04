@@ -18,13 +18,28 @@ const Carrousel = ({ media }) => {
       setVisible(visible + 1);
     }
   };
+
   return (
     <div className="carousel">
       <div>
         <div className="left-carousel" onClick={() => leftSwipe()}></div>
-        <img src={media.media_url} className="post-img" alt="" />
+        <div className="img-container flex">
+          <img
+            src={media[visible].media_url}
+            className="post-img fade"
+            alt=""
+          />
+        </div>
         <div className="right-carousel" onClick={() => rightSwipe()}></div>
-        <div className="bottom-carousel flex"></div>
+        <div className={media.length === 1 ? "hide" : "bottom-carousel flex"}>
+          {media.map((cuantity, index) => (
+            <div
+              key={index}
+              onClick={() => setVisible(index)}
+              className={index === visible ? "dot active" : "dot"}
+            ></div>
+          ))}
+        </div>
       </div>
     </div>
   );
