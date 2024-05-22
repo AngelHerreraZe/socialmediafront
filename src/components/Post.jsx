@@ -8,15 +8,16 @@ import getConfig from "../utils/getConfig";
 const Post = ({ post }) => {
   const token = jwtDecode(localStorage.getItem("clonstagram-token"));
   const loggedUserId = token.id;
-  console.log(post.id);
   const [alreadyLiked, setAlreadyLiked] = useState(false);
+  const [likesLength, setLikesLength] = useState(0)
   useEffect(() => {
     for (let i = 0; i < post.Likes.length; i++) {
       if (Number(post.Likes[i].user_id) === Number(loggedUserId)) {
         setAlreadyLiked(true);
-      }
+      } 
     }
-  }, [alreadyLiked]);
+    setLikesLength(post.Likes.length)
+  }, [alreadyLiked, likesLength]);
   const likePost = () => {
     axios
       .post(
@@ -24,7 +25,15 @@ const Post = ({ post }) => {
         {},
         getConfig()
       )
-      .then((res) => console.log(res))
+      .then((res) => {
+        if (alreadyLiked === true) {
+          setLikesLength(likesLength - 1)
+          setAlreadyLiked(false)
+        } else {
+          setLikesLength(likesLength + 1)
+          setAlreadyLiked(true)
+        }
+      })
       .catch((error) => console.log(error.data));
   };
   return (
@@ -67,7 +76,7 @@ const Post = ({ post }) => {
         <i className="bx bx-bookmark"></i>
       </div>
       <div className="post-description flex">
-        <p>{post.Likes.length} Me gusta</p>
+        <p>{likesLength} Me gusta</p>
         <div className="post-description-footer flex">
           <p>
             {post.User.name} {post.User.lastname}
